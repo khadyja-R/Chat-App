@@ -18,7 +18,7 @@ const corsOptions = {
 // Use CORS middleware with configured options
 app.use(cors(corsOptions));
 
-// Parse JSON request bodies
+// to parse incoming JSON data in the request body of HTTP requests. This allows us to access the data easily in our server-side code and process it as needed. Without this middleware, we would need to manually parse the JSON data from the request body, which can be time-consuming and error-prone.
 app.use(express.json());
 
 // Create HTTP server using the Express app
@@ -63,7 +63,7 @@ r.connect({ host: 'localhost', port: 28015, db: dbName }, (err, connection) => {
 
         // Handle 'new-message' event (sent when user sends a new chat message)
         socket.on('new-message', (message) => {
-          console.log("test some isuue i'm calling now ");
+          console.log("test some issuue i'm here  now ");
           message.username = socket.username; // Add the username to the message object
           message.createdAt = new Date(); // Add the current time to the message object
           r.table(tableName)
@@ -84,42 +84,42 @@ r.connect({ host: 'localhost', port: 28015, db: dbName }, (err, connection) => {
       });
 
       // Handle HTTP GET request to fetch all chat messages
-      app.get('/messages', (req, res) => {
-        r.table(tableName)
-          .orderBy(r.asc('createdAt')) // Sort by message creation time
-          .run(connection, (err, cursor) => {
-            if (err) {
-              console.error(err);
-              return res.status(500).send('Error fetching messages');
-            }
+      // app.get('/messages', (req, res) => {
+      //   r.table(tableName)
+      //     .orderBy(r.asc('createdAt')) // Sort by message creation time
+      //     .run(connection, (err, cursor) => {
+      //       if (err) {
+      //         console.error(err);
+      //         return res.status(500).send('Error fetching messages');
+      //       }
 
-            cursor.toArray((err, result) => {
-              if (err) {
-                console.error(err);
-                return res.status(500).send('Error fetching messages');
-              }
+      //       cursor.toArray((err, result) => {
+      //         if (err) {
+      //           console.error(err);
+      //           return res.status(500).send('Error fetching messages');
+      //         }
 
-              res.json(result); // Send the messages as a JSON array
-            });
-          });
-      });
+      //         res.json(result); // Send the messages as a JSON array
+      //       });
+      //     });
+      // });
 
-      // Handle HTTP POST request to create a
-      app.post('/messages', (req, res) => {
-        const message = req.body;
-        message.createdAt = new Date();
+      // // Handle HTTP POST request to create a
+      // app.post('/messages', (req, res) => {
+      //   const message = req.body;
+      //   message.createdAt = new Date();
 
-        r.table(tableName)
-          .insert(message)
-          .run(connection, (err, result) => {
-            if (err) {
-              console.error(err);
-              return res.status(500).send('Error posting message');
-            }
+      //   r.table(tableName)
+      //     .insert(message)
+      //     .run(connection, (err, result) => {
+      //       if (err) {
+      //         console.error(err);
+      //         return res.status(500).send('Error posting message');
+      //       }
 
-            res.json(result);
-          });
-      });
+      //       res.json(result);
+      //     });
+      // });
 
       server.listen(3002, () => {
         console.log('Server listening on port 3002');
