@@ -18,7 +18,8 @@ const corsOptions = {
 // Use CORS middleware with configured options
 app.use(cors(corsOptions));
 
-// to parse incoming JSON data in the request body of HTTP requests. This allows us to access the data easily in our server-side code and process it as needed. Without this middleware, we would need to manually parse the JSON data from the request body, which can be time-consuming and error-prone.
+// to parse incoming JSON data in the request body of HTTP requests.
+
 app.use(express.json());
 
 // Create HTTP server using the Express app
@@ -56,7 +57,7 @@ r.connect({ host: 'localhost', port: 28015, db: dbName }, (err, connection) => {
       io.on('connection', (socket) => {
         console.log('A user connected.');
 
-        // Handle 'auth' event (sent when user authenticates with a username)
+        // Handle 'auth' event (sent when user authenticates with a username)hhhhhhhhhh
         socket.on('auth', (username) => {
           socket.username = username; // Store the username in the socket object
         });
@@ -122,7 +123,7 @@ r.connect({ host: 'localhost', port: 28015, db: dbName }, (err, connection) => {
       // });
 
       server.listen(3002, () => {
-        console.log('Server listening on port 3002');
+        console.log('Server listening on port 3001');
       });
     });
   });
